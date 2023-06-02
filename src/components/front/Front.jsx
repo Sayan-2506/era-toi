@@ -5,7 +5,7 @@ import frontart from "../../assets/art1.jpg";
 import frontvideo from "../../assets/front-video.mp4";
 import play from "../../assets/play.svg";
 import pause from "../../assets/pause.svg";
-import sound from "../../assets/music2.mp4";
+import sound from "../../assets/music4.mp3";
 
 const Front = () => {
   const textAnimation = {

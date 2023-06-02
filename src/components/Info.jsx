@@ -40,7 +40,7 @@ const Info = () => {
         variants={textAnimation}
         className="text-2xl text-yellow-600 mb-5 font-vivaldi"
       >
-        Бисенбай және Нұржамал
+        Бисенбай-Нұржамал
       </motion.h2>
       <motion.h2
         custom={2}
@@ -49,7 +49,7 @@ const Info = () => {
       >
         13.07.2023
       </motion.h2>
-      <h3 className="text-base uppercase mb-5">Сағат 18:00 да</h3>
+      <h3 className="text-base uppercase mb-5">Сағат 18:00 де</h3>
       <motion.h2
         custom={3}
         variants={textAnimation}
