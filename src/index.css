@@ -1,0 +1,41 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Pacifico&display=swap');
+
+
+@font-face {
+    font-family: "Snell Roundhand";
+    src: url('./fonts/snell.ttf') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Vivaldi script";
+    src: url('./fonts/vivaldi.ttf') format('woff');
+    font-weight: 400;
+    font-display: swap;
+}
+
+
+/* :root {
+    --primary-dark: #5651e5;
+    --primary-light: #709dff;
+} */
+
+body {
+    background-color: #F0F0F0;
+    height: 100%;
+}
+
+@layer base {
+    html {
+        @apply scroll-smooth
+    }
+    body {
+        @apply font-[Montserrat]
+    }
+}

@@ -1,0 +1,95 @@
+
+.bird {
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  transform: translate(-30%, -50%);
+  width: 100px; /* Ширина птицы */
+  height: 100px; /* Высота птицы */
+  background-image: url(../../assets/bird.png); /* Путь к изображению птицы */
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  animation-name: flutter;
+  animation-duration: 0.01s; /* Длительность анимации */
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes flutter {
+  0%, 100% {
+    transform: translate(-50%, -50%) rotate(0deg); /* Начальная и конечная позиции птицы */
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(10deg); /* Позиция птицы в середине анимации */
+  }
+}
+
+
+
+.btn-play {
+  position: relative;
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 20%;
+  transform: translate(-20%, -50%);
+  display: block;
+  box-sizing: content-box;
+  width: 16px;
+  height: 26px;
+  border-radius: 100%;
+  border: none;
+  outline: none !important;
+  padding: 18px 20px 20px 28px;
+  background: #FFFFFF;
+}
+
+.btn-play:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: #FFFFFF;
+  border-radius: 100%;
+  animation: pulse-border 1500ms ease-out infinite;
+}
+
+.btn-play:after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  display: block;
+  width: 60px;
+  height: 60px;
+  background: #FFFFFF;
+  border-radius: 100%;
+  transition: all 200ms;
+}
+
+.player__btn-play__img {
+  position: relative;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -50%) 
+}
+
+@keyframes pulse-border {
+  0% {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) translateY(-50%) translateZ(0) scale(2);
+    opacity: 0;
+  }
+}
