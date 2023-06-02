@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-export const API_URL = 'https://weddings.pythonanywhere.com/api/v1/'
+export const API_URL = 'https://erasylwedding.pythonanywhere.com/api/v1/'
 
 const $api = axios.create({
     withCredentials: true,
