@@ -46,7 +46,7 @@ const textAnimation = {
 
 export default function CountDown() {
   const startTime = Date.now() / 1000; // use UNIX timestamp in seconds
-  const endTime = startTime + 2868900 ; // use UNIX timestamp in seconds
+  const endTime = startTime + 3561060; // use UNIX timestamp in seconds
   const remainingTime = endTime - startTime;
   const days = Math.ceil(remainingTime / daySeconds);
   const daysDuration = days * daySeconds;

@@ -4,7 +4,6 @@ import waiting from "../assets/waiting-list.svg";
 import bride from "../assets/bride.svg";
 import weddingArch from "../assets/wedding-arch.svg";
 import walth from "../assets/walth.svg";
-import cake from "../assets/cake.svg";
 import dance from "../assets/dance-woman.svg";
 
 const Program = () => {
@@ -27,7 +26,7 @@ const Program = () => {
       viewport={{ amount: 0.2, once: true }}
       className="m-auto mt-20 px-8 w-full max-w-[600px] h-full flex flex-col text-center text-slate-700"
     >
-      <h3 className="text-lg font-medium mb-6">Той бағдарламасы:</h3>
+      <h3 className="text-base font-medium mb-6">Той бағдарламасы:</h3>
       <ul>
         <motion.li
           custom={1}
@@ -71,17 +70,6 @@ const Program = () => {
           <div className="text-left">
             <p>22:00</p>
             <p>Күйеу жігіт пен қалындық вальсі</p>
-          </div>
-        </motion.li>
-        <motion.li
-          custom={5}
-          variants={textAnimation}
-          className="flex items-center gap-4 mb-8"
-        >
-          <img className="w-16 h-16" src={cake} alt="cakeImg" />
-          <div className="text-left">
-            <p>23:00</p>
-            <p>Свадебный торт</p>
           </div>
         </motion.li>
         <motion.li

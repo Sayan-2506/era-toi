@@ -93,7 +93,7 @@ const Front = () => {
           custom={2}
           variants={textAnimation}
         >
-          Манарбек пен Ақмарал
+          Ерасыл мен Нұржайна
         </motion.h2>
         <motion.p
           className="font-medium text-xs max-w-[280px] m-auto"
