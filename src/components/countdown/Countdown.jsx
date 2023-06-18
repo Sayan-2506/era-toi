@@ -1,35 +1,7 @@
 import React from "react";
-import "./countdown.scss";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import "moment/locale/tr";
-import Clock from "react-live-clock";
-import "moment-timezone";
-import "react-moment";
+import moment from "moment";
 import { motion } from "framer-motion";
-const minuteSeconds = 60;
-const hourSeconds = minuteSeconds * 60;
-const daySeconds = hourSeconds * 24;
-
-const timerProps = {
-  isPlaying: true,
-  size: 90,
-  strokeWidth: 6
-};
-
-const renderTime = (time) => {
-  return (
-    <div className="time-wrapper">
-      <div className="title time">{time}</div>
-    </div>
-  );
-};
-
-const getTimeSeconds = (time) => Math.ceil(minuteSeconds - time) - 1;
-const getTimeMinutes = (time) => Math.ceil(time / minuteSeconds) - 1;
-const getTimeHours = (time) => Math.ceil(time / hourSeconds) - 1;
-const getTimeDays = (time) => Math.ceil(time / daySeconds) - 1;
-
-
+import "./countdown.scss";
 
 const textAnimation = {
   hidden: {
@@ -43,16 +15,50 @@ const textAnimation = {
   }),
 };
 
+class Countdown extends React.Component {
+  state = {
+    days: undefined,
+    hours: undefined,
+    minutes: undefined,
+    seconds: undefined,
+  };
 
-export default function CountDown() {
-  const startTime = Date.now() / 1000; // use UNIX timestamp in seconds
-  const endTime = startTime + 3561060; // use UNIX timestamp in seconds
-  const remainingTime = endTime - startTime;
-  const days = Math.ceil(remainingTime / daySeconds);
-  const daysDuration = days * daySeconds;
+  componentDidMount() {
+    this.interval = setInterval(() => {
+      const { timeTillDate, timeFormat } = this.props;
+      const then = moment(timeTillDate, timeFormat);
+      const now = moment();
+      const countdown = moment(then - now);
+      const days = countdown.format("D");
+      const hours = countdown.format("HH");
+      const minutes = countdown.format("mm");
+      const seconds = countdown.format("ss");
 
-  return (
-    <motion.div
+      this.setState({ days, hours, minutes, seconds });
+    }, 1000);
+  }
+
+  componentWillUnmount() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+  }
+
+  render() {
+    const { days, hours, minutes, seconds } = this.state;
+
+    // Mapping the date values to radius values
+    const daysRadius = mapNumber(days, 30, 0, 0, 360);
+    const hoursRadius = mapNumber(hours, 24, 0, 0, 360);
+    const minutesRadius = mapNumber(minutes, 60, 0, 0, 360);
+    const secondsRadius = mapNumber(seconds, 60, 0, 0, 360);
+
+    if (!seconds) {
+      return null;
+    }
+
+    return (
+      <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -66,95 +72,88 @@ export default function CountDown() {
           Тойдың басталуына:
         </motion.h3>
         <div className="countdown-wrapper">
-          {daysDuration && (
+          {days && (
             <div className="countdown-item">
-            <CountdownCircleTimer
-              {...timerProps}
-              colors={[
-                ["#9000ff", 0],
-                ["#0066FF", 1]
-              ]}
-              isLinearGradient={true}
-              duration={daysDuration}
-              initialRemainingTime={remainingTime}
-              trailColor={[["#dbdbdb"]]}
-            >
-              {({ elapsedTime }) =>
-                renderTime(getTimeDays(daysDuration - elapsedTime))
-              }
-            </CountdownCircleTimer>
+              <SVGCircle radius={daysRadius} />
+              {days}
               <span>күн</span>
             </div>
           )}
-          {daySeconds && (
+          {hours && (
             <div className="countdown-item">
-            <CountdownCircleTimer
-              {...timerProps}
-              colors={[
-                ["#9000ff", 0],
-                ["#0066FF", 1]
-              ]}
-              isLinearGradient={true}
-              duration={daySeconds}
-              initialRemainingTime={remainingTime % daySeconds}
-              onComplete={(totalElapsedTime) => [
-                remainingTime - totalElapsedTime > hourSeconds
-              ]}
-              trailColor={[["#dbdbdb"]]}
-            >
-              {({ elapsedTime }) =>
-                renderTime(getTimeHours(daySeconds - elapsedTime))
-              }
-            </CountdownCircleTimer>
+              <SVGCircle radius={hoursRadius} />
+              {hours}
               <span>сағат</span>
             </div>
           )}
-          {hourSeconds && (
+          {minutes && (
             <div className="countdown-item">
-            <CountdownCircleTimer
-              {...timerProps}
-              colors={[
-                ["#9000ff", 0],
-                ["#0066FF", 1]
-              ]}
-              isLinearGradient={true}
-              duration={hourSeconds}
-              initialRemainingTime={remainingTime % hourSeconds}
-              onComplete={(totalElapsedTime) => [
-                remainingTime - totalElapsedTime > minuteSeconds
-              ]}
-              trailColor={[["#dbdbdb"]]}
-            >
-              {({ elapsedTime }) =>
-                renderTime(getTimeMinutes(hourSeconds - elapsedTime))
-              }
-            </CountdownCircleTimer>
+              <SVGCircle radius={minutesRadius} />
+              {minutes}
               <span>минут</span>
             </div>
           )}
-          {minuteSeconds && (
+          {seconds && (
             <div className="countdown-item">
-            <CountdownCircleTimer
-              {...timerProps}
-              colors={[
-                ["#9000ff", 0],
-                ["#0066FF", 1]
-              ]}
-              isLinearGradient={true}
-              duration={minuteSeconds}
-              initialRemainingTime={remainingTime % minuteSeconds}
-              onComplete={(totalElapsedTime) => [
-                remainingTime - totalElapsedTime > 0
-              ]}
-              trailColor={[["#dbdbdb"]]}
-            >
-              {({ elapsedTime }) => renderTime(getTimeSeconds(elapsedTime))}
-            </CountdownCircleTimer>
+              <SVGCircle radius={secondsRadius} />
+              {seconds}
               <span>секунд</span>
             </div>
           )}
         </div>
       </motion.div>
-  )
-
+    );
+  }
 }
+
+const SVGCircle = ({ radius }) => (
+  <svg className="countdown-svg">
+    <path
+      fill="none"
+      stroke="#333"
+      strokeWidth="4"
+      d={describeArc(50, 50, 40, 0, radius)}
+    />
+  </svg>
+);
+
+
+function polarToCartesian(centerX, centerY, radius, angleInDegrees) {
+  var angleInRadians = ((angleInDegrees - 90) * Math.PI) / 180.0;
+
+  return {
+    x: centerX + radius * Math.cos(angleInRadians),
+    y: centerY + radius * Math.sin(angleInRadians),
+  };
+}
+
+function describeArc(x, y, radius, startAngle, endAngle) {
+  var start = polarToCartesian(x, y, radius, endAngle);
+  var end = polarToCartesian(x, y, radius, startAngle);
+
+  var largeArcFlag = endAngle - startAngle <= 180 ? "0" : "1";
+
+  var d = [
+    "M",
+    start.x,
+    start.y,
+    "A",
+    radius,
+    radius,
+    0,
+    largeArcFlag,
+    0,
+    end.x,
+    end.y,
+  ].join(" ");
+
+  return d;
+}
+
+function mapNumber(number, in_min, in_max, out_min, out_max) {
+  return (
+    ((number - in_min) * (out_max - out_min)) / (in_max - in_min) + out_min
+  );
+}
+
+export default Countdown;

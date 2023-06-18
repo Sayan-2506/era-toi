@@ -26,7 +26,7 @@ function App() {
       <Info />
       <Program />
       <DresCode />
-      <CountDown />
+      <CountDown timeTillDate="07 12 2023, 12:00 p" timeFormat="MM DD YYYY, h:mm p" />
       <Form />
       <PartyImage />
     </div>
